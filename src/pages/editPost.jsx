@@ -43,13 +43,15 @@ const EditPost = () => {
             posts[index] = newPost;
             localStorage.setItem('posts', JSON.stringify(posts));
             alert('Post edited');
+            navigate(("/posts/" + String(id) ));
+
        
 
         }
         return (
             <>
-                <textarea rows='1' cols='100' className='edit_title first-letter:uppercase text-2xl font-extralight mb-4' defaultValue={post.title}></textarea>
-                <textarea rows='10' cols='100' className='edit_text first-letter:uppercase mb-4' defaultValue={post.body}></textarea>
+                <textarea rows='1' cols='100' className='edit_title border-solid border-2 border-sky-500 text-2xl font-extralight mb-4 p-2 leading-5 w-full first-letter:uppercase ' defaultValue={post.title}></textarea>
+                <textarea rows='10' cols='100' className='edit_text border-solid border-2 border-sky-500 mb-4 p-2 leading-5 w-full first-letter:uppercase' defaultValue={post.body}></textarea>
                 <div>
                     <button className='bg-sky-500 hover:bg-sky-700 px-5 py-2 text-sm leading-5 rounded-md font-semibold text-white mr-2' onClick={handleChange}>Set Post</button>
                     <button className='bg-sky-500 hover:bg-sky-700 px-5 py-2 text-sm leading-5 rounded-md font-semibold text-white mr-2' onClick={handleBack}>Back</button>

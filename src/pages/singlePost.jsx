@@ -21,7 +21,7 @@ const SinglePost = () => {
     }
     const handleBack = () =>{
 
-        navigate(-1);
+        navigate('/posts');
     }
     useEffect(() => {
         setPost(Object.keys(localStorage).length > 0 ? postFromLocalStorage() : loadServerPosts() );

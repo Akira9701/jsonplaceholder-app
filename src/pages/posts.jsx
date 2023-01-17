@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import Post from "../components/postList";
+import Pagination from "../components/pagination";
 const Posts = () => {
 
     const [posts, setPosts] = useState();
     const storageLength = Object.keys(localStorage).length;
+    const step = 4;
     const loadServerPosts = () => {
         fetch('https://jsonplaceholder.typicode.com/posts/')
         .then(response => response.json())
@@ -35,6 +37,8 @@ const Posts = () => {
                         posts.map((post) => <Post key={post.id} title={post.title} id={post.id}  />)
                     }
                 </ul>
+                <Pagination step={step} postsCount={posts.length} />
+
             </>
         );
     }
