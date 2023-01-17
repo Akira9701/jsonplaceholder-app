@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import Post from "../components/postList";
 import Pagination from "../components/pagination";
-const Posts = () => {
+import { useSearchParams } from "react-router-dom";
+import _ from "lodash";
 
+const Posts = () => { 
+    const [searchParams, setSearchParams] = useSearchParams();
     const [posts, setPosts] = useState();
-    const storageLength = Object.keys(localStorage).length;
-    const step = 4;
+    const page = searchParams.get('page') === null ? 1 : searchParams.get('page');
+    const stepPage = 4;
     const loadServerPosts = () => {
         fetch('https://jsonplaceholder.typicode.com/posts/')
         .then(response => response.json())
@@ -17,27 +20,27 @@ const Posts = () => {
 
     useEffect(() => {
         setPosts(Object.keys(localStorage).length > 0 ? JSON.parse(localStorage.getItem('posts')) : loadServerPosts() );
-        
     }, [])
-
-
-
-
 
     const Title = () => {
         return <p className="text-2xl font-extralight mb-4">Post from JSON.placheolder</p>
     }
 
+    const setPage = (pageNow) => {
+        setSearchParams({page: pageNow});
+    }   
+
+
     if(posts !== undefined){
         return ( 
             <>
                 <Title />
-                <ul className="list-disc ml-4">
+                <ul className="list-disc ml-4 mb-5">
                     {
-                        posts.map((post) => <Post key={post.id} title={post.title} id={post.id}  />)
+                        posts.slice(((page-1) * 4), (Number(page) * 4)).map((post) => <Post key={post.id} title={post.title} id={post.id}  />)
                     }
                 </ul>
-                <Pagination step={step} postsCount={posts.length} />
+                <Pagination step={stepPage} postsCount={posts.length} setPage={setPage} activePage={page} />
 
             </>
         );
